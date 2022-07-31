@@ -7,6 +7,7 @@ public class Player {
 	public Player(String name) {
 		this.name = name;
 	}
+	
 
 	//Setter and Getter
 	public String getName() {
@@ -16,6 +17,8 @@ public class Player {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	
 	
 	
 }
