@@ -1,5 +1,8 @@
 package OthelloMain;
 
-public class UnplayablePosition {
-
+public class UnplayablePosition extends Position {
+	
+	public boolean canPlay() {
+		return false;
+	}
 }
