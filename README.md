@@ -2,6 +2,7 @@
 
 ### Description
 This personal project aims to use concepts of object orientated programming to create a PvP Othello game. 
+The Othello board will be an array of ASCII characters. 
 In this variation of Othello, user can choose from 5 options of starting position. Furthermore, some board positions will be unplayable.
 
 ### Game Rules
