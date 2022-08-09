@@ -36,49 +36,48 @@ public class Board {
 		//If the position cannot be play, it is a unplayable pos
 		
 		drawBoard();
-		//play();
+		play();
 		inGameMenu();	
 	}
 	
 	//Play() method that loops
-//	public void play() {
-//		for(int i = 0; i < 64; i++) {
-//			drawBoard();
-////			makeMove();
-//			//checkBoardStatus();
-//		}
-//			
-//	}
+	public void play() {
+		for(int i = 0; i < 64; i++) {
+			drawBoard();
+			makeMove();
+		}
+			
+	}
 	
 	//Method for current player to make their move
 	//Only use this method when canPlay() returns true
-//	public void makeMove() {
-//		boolean hasMoved = false;
-//		//Scanner for user input
-//		Scanner sc = new Scanner(System.in);
-//		do {
-//			System.out.println("The position can be selected by adding the value of the row and col");
-//			System.out.println("Please make a move for " + current.getName() + " (0-63)");
-//			int move = sc.nextInt();
-//			if(move < 0 || move > 63) {
-//				System.out.println("Please make a move");
-//			} 
-//			//If canPlay != true, ask user to make a valid move
-//			else if (!(board[move].canPlay())){
-//				
-//				System.out.println("Please make a move on a valid position");
-//			} else {
-//				//Set the selected position to 'B'
-//				//Then switch current player from first to second, vice versa
-//				board[move] = ;
-//				if(current == first) current=second;
-//				else current = first;
-//				hasMoved = true;
-//			}
-//		} while (!hasMoved);
-//		System.out.println("Called");
-//		
-//	}
+	public void makeMove() {
+		boolean hasMoved = false;
+		//Scanner for user input
+		Scanner sc = new Scanner(System.in);
+		do {
+			System.out.println("The position can be selected by adding the value of the row and col");
+			System.out.println("Please make a move for " + current.getName() + " (0-63)");
+			int move = sc.nextInt();
+			if(move < 0 || move > 63) {
+				System.out.println("Please make a move");
+			} 
+			//If canPlay != true, ask user to make a valid move
+			else if (!(board[move].canPlay())){
+				
+				System.out.println("Please make a move on a valid position");
+			} else {
+				//Set the selected position to 'B'
+				//Then switch current player from first to second, vice versa
+				board[move] = black.getBlack();
+				if(current == first) current=second;
+				else current = first;
+				hasMoved = true;
+			}
+		} while (!hasMoved);
+		System.out.println("Called");
+		
+	}
 	
 	//Method to draw default 8x8 board
 	private void drawBoard() {
