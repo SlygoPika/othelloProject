@@ -1,14 +1,26 @@
 package OthelloMain;
 
-import java.util.Arrays;
 
 public class PlayablePosition extends Position {
 	
 	public PlayablePosition() {
-		super();
-		canPlay();
+		super.setPiece(EMPTY);
+		super.toString();
 	}
 
+	public PlayablePosition(Player current) {
+		Player p1 = new Player("Black");
+		current.getName();
+		if	(current==p1) {
+			super.setPiece(BLACK);
+			super.toString();
+		}else {
+			super.setPiece(WHITE);
+			super.toString();
+		}
+		System.out.println("Black/White constructor called");
+	}
+	
 	//If the position is EMPTY, canPlay is true
 	public boolean canPlay() {
 		char piece = this.getPiece();
@@ -18,9 +30,5 @@ public class PlayablePosition extends Position {
 		return false;
 	}
 	
-	@Override
-	public String toString() {
-		super.toString();
-		return "" + super.getPiece();
-	}
+
 }

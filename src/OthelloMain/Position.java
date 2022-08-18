@@ -24,12 +24,8 @@ public abstract class Position {
 	
 
 	//Take an array of Positions and initialize them
-	public Position(Position[] board) {
+	public Position() {
 		super();
-		setPiece(EMPTY);
-		for(int i=0; i<board.length;i++) {
-			board[i].toString();
-		}
 		
 	}
 	
@@ -41,34 +37,34 @@ public abstract class Position {
 	}
 	
 	//Flip method that determine which pieces were converted
-	public void flip() {
-		//Check if there is a valid horizontal line
-		if (checkHorz(board[current])) {
-			boolean sameColor = false;
-			
-			//Loop until the same color is found in the horizontal line
-			//Has to work for both direction
-			//Has to stay within the row
-			//Once found the same color, set every element in the array to current color.
-		}
-		
-		//Check if there is a valid vertical line
-		if (checkVert(board[current])) {
-			//Loop until the same color is found in the vertical line
-			//Has to work for both direction
-			//Has to stay within the column
-			//Once found the same color, set every element in the array to current color.
-			
-		}
-		
-		//Check if there is a valid diagonal line
-		if (checkDiag(board[current])) {
-			//Loop until the same color is found in the diagonal line
-			//Has to work for both direction
-			//Has to stay within the board
-			//Once found the same color, set every element in the array to current color.
-		}
-	}
+//	public void flip() {
+//		//Check if there is a valid horizontal line
+//		if (checkHorz(board[current])) {
+//			boolean sameColor = false;
+//			
+//			//Loop until the same color is found in the horizontal line
+//			//Has to work for both direction
+//			//Has to stay within the row
+//			//Once found the same color, set every element in the array to current color.
+//		}
+//		
+//		//Check if there is a valid vertical line
+//		if (checkVert(board[current])) {
+//			//Loop until the same color is found in the vertical line
+//			//Has to work for both direction
+//			//Has to stay within the column
+//			//Once found the same color, set every element in the array to current color.
+//			
+//		}
+//		
+//		//Check if there is a valid diagonal line
+//		if (checkDiag(board[current])) {
+//			//Loop until the same color is found in the diagonal line
+//			//Has to work for both direction
+//			//Has to stay within the board
+//			//Once found the same color, set every element in the array to current color.
+//		}
+//	}
 	
 	//If at least one piece flip && the move is not on an unplayable position
 	public abstract boolean canPlay();

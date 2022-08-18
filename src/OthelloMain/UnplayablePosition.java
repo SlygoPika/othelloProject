@@ -1,20 +1,12 @@
 package OthelloMain;
 
-import java.util.Arrays;
-
 public class UnplayablePosition extends Position {
-	private static Position[] badPos;
 	public final char UNPLAYABLE = '*';
 	
 	//Set the four center pos along the left column UNPLAYABLE
-	public UnplayablePosition(Position pos) {
-		super(badPos);
-		badPos[16] = '*';
-		badPos[24] = '*';
-		badPos[32] = '*';
-		badPos[40] = '*';
-		canPlay();
-		
+	public UnplayablePosition() {
+		super.setPiece(UNPLAYABLE);
+		super.toString();
 	}
 
 
