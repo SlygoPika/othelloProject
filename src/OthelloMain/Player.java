@@ -2,12 +2,24 @@ package OthelloMain;
 
 public class Player {
 	private String name;
+	private int num;
 	
 	//Constructor
-	public Player(String name) {
+	public Player(String name, int num) {
 		this.name = name;
+		setNum(num);
 	}
 	
+
+	public int getNum() {
+		return num;
+	}
+
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
 
 	//Setter and Getter
 	public String getName() {

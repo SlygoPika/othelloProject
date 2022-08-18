@@ -9,9 +9,8 @@ public class PlayablePosition extends Position {
 	}
 
 	public PlayablePosition(Player current) {
-		Player p1 = new Player("Black");
-		current.getName();
-		if	(current==p1) {
+		int p = current.getNum();
+		if	(p==1) {
 			super.setPiece(BLACK);
 			super.toString();
 		}else {

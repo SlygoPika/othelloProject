@@ -27,7 +27,7 @@ public class Board {
 		this.first = p1;
 		this.second = p2;
 		current = p1;
-		System.out.println("Name of p1 " + p1.getName());
+		System.out.println(p1.getName());
 		System.out.println("Name of p2 " + p2.getName());
 		
 		//Initialize the board
@@ -40,7 +40,7 @@ public class Board {
 			board[32] = new UnplayablePosition();
 			board[40] = new UnplayablePosition();
 		}
-		
+		drawBoard();
 		play();
 //		inGameMenu();	
 	}
@@ -48,7 +48,6 @@ public class Board {
 	//Play() method that loops
 	public void play() {
 		for(int i = 0; i < 64; i++) {
-//			drawBoard();
 			makeMove();
 		}
 			
@@ -70,12 +69,12 @@ public class Board {
 			} 
 			//If canPlay != true, ask user to make a valid move
 			else if (!(board[move].canPlay())){
-				
 				System.out.println("Please make a move on a valid position");
+				drawBoard();
 			} else {
 				//Set the selected position to 'B'
 				//Then switch current player from first to second, vice versa
-				board[move] = new PlayablePosition(first);
+				board[move] = new PlayablePosition(current);
 				if(current == first) current=second;
 				else current = first;
 				hasMoved = true;

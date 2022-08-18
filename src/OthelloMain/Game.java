@@ -12,8 +12,8 @@ public class Game {
 	}
 	
 	public static void main(String[] args) {
-		Player black = new Player("Black");
-		Player white = new Player("White");
+		Player black = new Player("Black",1);
+		Player white = new Player("White",2);
 		Board board = new Board(black, white);
 		board.makeMove();
 		
