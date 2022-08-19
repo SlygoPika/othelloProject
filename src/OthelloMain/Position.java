@@ -39,8 +39,7 @@ public abstract class Position {
 	//Flip method that determine which pieces were converted
 	public void flip() {
 		//Check if there is a valid horizontal line
-		if (checkHorz(board[current])) {
-			boolean sameColor = false;
+		if () {
 			
 			//Loop until the same color is found in the horizontal line
 			//Has to work for both direction
@@ -66,6 +65,43 @@ public abstract class Position {
 		}
 	}
 	
+	public boolean check(int current) {
+		//Check the 8 positions around the current position
+		//Need to catch exception when array goes out of bound.
+		if	(board[current]!= EMPTY) {
+			
+			if	(board[current+1] != EMPTY &&
+				 board[current+1] == board[current]
+				){return true;}
+			//May be try implementing recursion here
+			if	(board[current-1] != EMPTY &&
+					 board[current-1] == board[current]
+					){return true;}
+			
+			//Check vertical
+			if	(board[current+8] != EMPTY &&
+					 board[current+8] == board[current]
+					){return true;}
+			if	(board[current-8] != EMPTY &&
+					 board[current-8] == board[current]
+					){return true;}
+			
+			//Check diagonal
+			if	(board[current+7] != EMPTY &&
+					 board[current+7] == board[current]
+					){return true;}
+			if	(board[current+9] != EMPTY &&
+					 board[current+9] == board[current]
+					){return true;}
+			if	(board[current-7] != EMPTY &&
+					 board[current-7] == board[current]
+					){return true;}
+			if	(board[current-9] != EMPTY &&
+					 board[current-9] == board[current]
+					){return true;}
+		}
+		return false;
+	}
 	//If at least one piece flip && the move is not on an unplayable position
 	public abstract boolean canPlay();
 	
