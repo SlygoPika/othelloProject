@@ -17,7 +17,6 @@ public class PlayablePosition extends Position {
 			super.setPiece(WHITE);
 			super.toString();
 		}
-		System.out.println("Black/White constructor called");
 	}
 	
 	//If the position is EMPTY, canPlay is true

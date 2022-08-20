@@ -27,14 +27,14 @@ public class Board {
 		this.first = p1;
 		this.second = p2;
 		current = p1;
-		System.out.println(p1.getName());
-		System.out.println("Name of p2 " + p2.getName());
 		
 		//Initialize the board
-		//If the position can be play, it is a playable pos
-		//If the position cannot be play, it is a unplayable pos
 		for(int i =0; i<board.length;i++) {
 			board[i] = new PlayablePosition();
+			board[27] = new PlayablePosition(second);
+			board[28] = new PlayablePosition(first);
+			board[35] = new PlayablePosition(first);
+			board[36] = new PlayablePosition(second);
 			board[16] = new UnplayablePosition();
 			board[24] = new UnplayablePosition();
 			board[32] = new UnplayablePosition();
@@ -75,14 +75,65 @@ public class Board {
 				//Set the selected position to 'B'
 				//Then switch current player from first to second, vice versa
 				board[move] = new PlayablePosition(current);
-				if(current == first) current=second;
-				else current = first;
+				
 				hasMoved = true;
+				if(current == first) {current=second;}
+				else {current = first;}
+				//Call flip() before switch player
+				//Recursively checking horizontal position until it returns true
+				while (check(move, current)) {
+					System.out.println("Flipped");
+					check(++move, current);
+				}
+				
+				
 			}
 		} while (!hasMoved);
 		drawBoard();
-		System.out.println("Called");
 		
+	}
+	
+	
+	
+	public boolean check(int curr, Player current) {
+		
+		//Check the 8 positions around the current position
+		//Need to catch exception when array goes out of bound.
+		
+		
+		if	(board[curr].getPiece() == '.') {
+			return false;
+		}
+		//Checking both direction horizontally
+		if	((board[curr+1].getPiece() != '.') &&
+			 (board[curr].getPiece() != board[curr+1].getPiece())
+			) {board[curr+1].flip(current);return true;}
+		else if	((board[curr-1].getPiece() != '.') &&
+				 (board[curr].getPiece() != board[curr-1].getPiece())
+				) {board[curr-1].flip(current);return true;}
+		//Check vertical
+		if	((board[curr+8].getPiece() != '.') &&
+			 (board[curr].getPiece() != board[curr+8].getPiece())
+			) {board[curr+8].flip(current);return true;}
+		else if	((board[curr-8].getPiece() != '.') &&
+				 (board[curr].getPiece() != board[curr-8].getPiece())
+				) {board[curr-8].flip(current);return true;}
+//			
+			//Check diagonal
+		if	((board[curr+7].getPiece() != '.') &&
+			 (board[curr].getPiece() != board[curr+8].getPiece())
+			) {board[curr+7].flip(current);return true;}
+		else if	((board[curr-7].getPiece() != '.') &&
+				 (board[curr].getPiece() != board[curr-8].getPiece())
+				) {board[curr-7].flip(current);return true;}
+		if	((board[curr+9].getPiece() != '.') &&
+			 (board[curr].getPiece() != board[curr+8].getPiece())
+			) {board[curr+9].flip(current);return true;}
+		else if	((board[curr-9].getPiece() != '.') &&
+				 (board[curr].getPiece() != board[curr-8].getPiece())
+				) {board[curr-9].flip(current);return true;}
+		
+		return false;
 	}
 	
 	//Method to draw default 8x8 board
