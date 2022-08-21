@@ -42,10 +42,10 @@ public abstract class Position {
 		int p = current.getNum();
 		if	(p==1) {
 			
-			this.setPiece(WHITE);
+			this.setPiece(BLACK);
 			this.toString();
 		}else {
-			this.setPiece(BLACK);
+			this.setPiece(WHITE);
 			this.toString();
 		}
 	}

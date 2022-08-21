@@ -76,10 +76,10 @@ public class Board {
 				
 				hasMoved = true;
 				//If checkFlip() returns false, the move is invalid
-				while(checkFlip(move,move,current)) {
-					//Flip the positions to the opposite color
-					board[move+1].flip(current);
-				}
+				rightFlip(move,move,current);
+				leftFlip(move,move,current);
+				topFlip(move,move,current);
+				botFlip(move,move,current);
 				if(current == first) {current=second;}
 				else {current = first;}
 				
@@ -89,55 +89,65 @@ public class Board {
 		
 	}
 	
-	public boolean checkFlip(int mov, int curr, Player current) {
-		int move = mov;
-		char ogMove = board[move].getPiece();
-		System.out.println("OG: " + ogMove);
-		System.out.println("OG + " + curr + " " + board[curr].getPiece());
-		//Base case
-		//If we hit a Position that is EMPTY or the same as ogMove return false
-		if	(board[curr+1].getPiece() == '.') {return false;}
-		else if(board[curr+1].getPiece() == ogMove) {return true;}
-		//Repeat if the Position to the right is not the same
-		
-		if(board[curr+1].getPiece()!=ogMove) {
-			return checkFlip(move,++curr,current);
+	public boolean rightFlip(int move, int next, Player current) {
+		//Checking the right of current Position
+		next++;
+		if	(board[next].getPiece()=='.') {return false;}
+		if	(board[move].getPiece()==board[next].getPiece()) {return false;}
+		if	(board[move].getPiece()!=board[next].getPiece()) {
+			board[next].flip(current);
+			System.out.println("Flipped");
+			return rightFlip(move,next,current);
 		}
+		
 		return false;
 	}
 	
-	public void doFlip(int curr, Player current) {
+	public boolean leftFlip(int move, int next, Player current) {
+		//Checking the right of current Position
+		next--;
+		if	(board[next].getPiece()=='.') {return false;}
+		if	(board[move].getPiece()==board[next].getPiece()) {return false;}
+		if	(board[move].getPiece()!=board[next].getPiece()) {
+			board[next].flip(current);
+			System.out.println("Flipped");
+			return leftFlip(move,next,current);
+			}
+		
+		return false;
+	}
+	public boolean topFlip(int move, int next, Player current) {
+		//Checking the top of current Position
+		next-=8;
+		if	(board[next].getPiece()=='.') {return false;}
+		if	(board[move].getPiece()==board[next].getPiece()) {return false;}
+		if	(board[move].getPiece()!=board[next].getPiece()) {
+			board[next].flip(current);
+			System.out.println("top flipped");
+			return topFlip(move,next,current);
+			
+			}
+		
+		return false;
+	}
+	public boolean botFlip(int move, int next, Player current) {
+		//Checking the bottom of current Position
+		next+=8;
+		if	(board[next].getPiece()=='.') {return false;}
+		if	(board[move].getPiece()==board[next].getPiece()) {return false;}
+		if	(board[move].getPiece()!=board[next].getPiece()) {
+			board[next].flip(current);
+			System.out.println("bot flipped");
+			return botFlip(move,next,current);
+			}
+		
+		return false;
+	}
+	
+	public void checkFlip(int curr, Player current) {
 		
 		//Check the 8 positions around the current position
 		//Need to catch exception when array goes out of bound.
-		
-		
-//		//Checking both horizontal directions
-//		if	( (board[curr+1].getPiece() != '.' || board[curr-1].getPiece() != '.') &&
-//			 board[curr].getPiece() != board[curr+1].getPiece() &&
-//			 board[curr].getPiece() != board[curr-1].getPiece()
-//			) {
-//			if	(board[curr+1].getPiece() != '.' &&
-//				 board[curr].getPiece() != board[curr+1].getPiece()
-//			){board[curr+1].flip(current);}
-//			if	(board[curr-1].getPiece() != '.' &&
-//				 board[curr].getPiece() != board[curr-1].getPiece()
-//			){board[curr-1].flip(current);}
-//			
-//			}
-//		//Check both vertical directions
-//		if	((board[curr+8].getPiece() != '.' || board[curr-8].getPiece() != '.')&&
-//			 board[curr].getPiece() != board[curr+8].getPiece() &&
-//			 board[curr].getPiece() != board[curr-8].getPiece()
-//			) {
-//			if	(board[curr+8].getPiece() != '.' &&
-//					 board[curr].getPiece() != board[curr+8].getPiece()
-//			) {board[curr+8].flip(current);}
-//			if	(board[curr-8].getPiece() != '.' &&
-//				 board[curr].getPiece() != board[curr-8].getPiece()
-//			){board[curr-8].flip(current);}
-//			return true;
-//			}
 //		
 //		//Check both diagonal directions
 //		if	((board[curr+7].getPiece() != '.' || board[curr-7].getPiece() != '.') &&
