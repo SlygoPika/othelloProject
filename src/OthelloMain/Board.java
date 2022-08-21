@@ -31,14 +31,11 @@ public class Board {
 		//Initialize the board
 		for(int i =0; i<board.length;i++) {
 			board[i] = new PlayablePosition();
+			//Initial starting positions
 			board[27] = new PlayablePosition(second);
 			board[28] = new PlayablePosition(first);
 			board[35] = new PlayablePosition(first);
 			board[36] = new PlayablePosition(second);
-			board[16] = new UnplayablePosition();
-			board[24] = new UnplayablePosition();
-			board[32] = new UnplayablePosition();
-			board[40] = new UnplayablePosition();
 		}
 		drawBoard();
 		play();
@@ -60,6 +57,7 @@ public class Board {
 		int move = 0;
 		//Scanner for user input
 		Scanner sc = new Scanner(System.in);
+		
 		do {
 			System.out.println("The position can be selected by adding the value of the row and col");
 			System.out.println("Please make a move for " + current.getName() + " (0-63)");
@@ -77,15 +75,13 @@ public class Board {
 				board[move] = new PlayablePosition(current);
 				
 				hasMoved = true;
+				//If checkFlip() returns false, the move is invalid
+				while(checkFlip(move,move,current)) {
+					//Flip the positions to the opposite color
+					board[move+1].flip(current);
+				}
 				if(current == first) {current=second;}
 				else {current = first;}
-				//Call flip() before switch player
-				//Recursively checking horizontal position until it returns true
-				while (check(move, current)) {
-					System.out.println("Flipped");
-					check(++move, current);
-				}
-				
 				
 			}
 		} while (!hasMoved);
@@ -93,54 +89,95 @@ public class Board {
 		
 	}
 	
+	public boolean checkFlip(int mov, int curr, Player current) {
+		int move = mov;
+		char ogMove = board[move].getPiece();
+		System.out.println("OG: " + ogMove);
+		System.out.println("OG + " + curr + " " + board[curr].getPiece());
+		//Base case
+		//If we hit a Position that is EMPTY or the same as ogMove return false
+		if	(board[curr+1].getPiece() == '.') {return false;}
+		else if(board[curr+1].getPiece() == ogMove) {return true;}
+		//Repeat if the Position to the right is not the same
+		
+		if(board[curr+1].getPiece()!=ogMove) {
+			return checkFlip(move,++curr,current);
+		}
+		return false;
+	}
 	
-	
-	public boolean check(int curr, Player current) {
+	public void doFlip(int curr, Player current) {
 		
 		//Check the 8 positions around the current position
 		//Need to catch exception when array goes out of bound.
 		
 		
-		if	(board[curr].getPiece() == '.') {
-			return false;
-		}
-		//Checking both direction horizontally
-		if	((board[curr+1].getPiece() != '.') &&
-			 (board[curr].getPiece() != board[curr+1].getPiece())
-			) {board[curr+1].flip(current);return true;}
-		else if	((board[curr-1].getPiece() != '.') &&
-				 (board[curr].getPiece() != board[curr-1].getPiece())
-				) {board[curr-1].flip(current);return true;}
-		//Check vertical
-		if	((board[curr+8].getPiece() != '.') &&
-			 (board[curr].getPiece() != board[curr+8].getPiece())
-			) {board[curr+8].flip(current);return true;}
-		else if	((board[curr-8].getPiece() != '.') &&
-				 (board[curr].getPiece() != board[curr-8].getPiece())
-				) {board[curr-8].flip(current);return true;}
+//		//Checking both horizontal directions
+//		if	( (board[curr+1].getPiece() != '.' || board[curr-1].getPiece() != '.') &&
+//			 board[curr].getPiece() != board[curr+1].getPiece() &&
+//			 board[curr].getPiece() != board[curr-1].getPiece()
+//			) {
+//			if	(board[curr+1].getPiece() != '.' &&
+//				 board[curr].getPiece() != board[curr+1].getPiece()
+//			){board[curr+1].flip(current);}
+//			if	(board[curr-1].getPiece() != '.' &&
+//				 board[curr].getPiece() != board[curr-1].getPiece()
+//			){board[curr-1].flip(current);}
 //			
-			//Check diagonal
-		if	((board[curr+7].getPiece() != '.') &&
-			 (board[curr].getPiece() != board[curr+8].getPiece())
-			) {board[curr+7].flip(current);return true;}
-		else if	((board[curr-7].getPiece() != '.') &&
-				 (board[curr].getPiece() != board[curr-8].getPiece())
-				) {board[curr-7].flip(current);return true;}
-		if	((board[curr+9].getPiece() != '.') &&
-			 (board[curr].getPiece() != board[curr+8].getPiece())
-			) {board[curr+9].flip(current);return true;}
-		else if	((board[curr-9].getPiece() != '.') &&
-				 (board[curr].getPiece() != board[curr-8].getPiece())
-				) {board[curr-9].flip(current);return true;}
-		
-		return false;
+//			}
+//		//Check both vertical directions
+//		if	((board[curr+8].getPiece() != '.' || board[curr-8].getPiece() != '.')&&
+//			 board[curr].getPiece() != board[curr+8].getPiece() &&
+//			 board[curr].getPiece() != board[curr-8].getPiece()
+//			) {
+//			if	(board[curr+8].getPiece() != '.' &&
+//					 board[curr].getPiece() != board[curr+8].getPiece()
+//			) {board[curr+8].flip(current);}
+//			if	(board[curr-8].getPiece() != '.' &&
+//				 board[curr].getPiece() != board[curr-8].getPiece()
+//			){board[curr-8].flip(current);}
+//			return true;
+//			}
+//		
+//		//Check both diagonal directions
+//		if	((board[curr+7].getPiece() != '.' || board[curr-7].getPiece() != '.') &&
+//			 board[curr].getPiece() != board[curr+7].getPiece() &&
+//			 board[curr].getPiece() != board[curr-7].getPiece()
+//			) {
+//			if	(board[curr+7].getPiece() != '.' &&
+//					 board[curr].getPiece() != board[curr+7].getPiece()
+//			) {board[curr+7].flip(current);}
+//			if	(board[curr-7].getPiece() != '.' &&
+//				 board[curr].getPiece() != board[curr-7].getPiece()
+//			){board[curr-7].flip(current);}
+//			return true;
+//			}
+//		if	((board[curr+9].getPiece() != '.' || board[curr-9].getPiece() != '.') &&
+//				 board[curr].getPiece() != board[curr+9].getPiece() &&
+//				 board[curr].getPiece() != board[curr-9].getPiece()
+//				) {
+//				if	(board[curr+9].getPiece() != '.' &&
+//						 board[curr].getPiece() != board[curr+9].getPiece()
+//				) {board[curr+9].flip(current);}
+//				if	(board[curr-9].getPiece() != '.' &&
+//					 board[curr].getPiece() != board[curr-9].getPiece()
+//				){board[curr-9].flip(current);}
+//				return true;
+//				}
 	}
 	
+
 	//Method to draw default 8x8 board
 	private void drawBoard() {
 		char[] axisX = {'0','1','2','3','4','5','6','7'};
 		int[] axisY = {0,8,16,24,32,40,48,56};
 		
+		//Static positions, will never change
+
+		board[16] = new UnplayablePosition();
+		board[24] = new UnplayablePosition();
+		board[32] = new UnplayablePosition();
+		board[40] = new UnplayablePosition();
 		//Horizontal label
 		for	(int i = 0; i < 8; i++) {
 			System.out.print("\t");
