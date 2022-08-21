@@ -76,10 +76,14 @@ public class Board {
 				
 				hasMoved = true;
 				//If checkFlip() returns false, the move is invalid
-				rightFlip(move,move,current);
-				leftFlip(move,move,current);
-				topFlip(move,move,current);
-				botFlip(move,move,current);
+				if	(checkRight(move,move)) 	{rightFlip(move,move,current);}
+				if	(checkLeft(move,move))		{leftFlip(move,move,current);}
+				if	(checkTop(move,move))		{topFlip(move,move,current);}
+				if	(checkBot(move,move))		{botFlip(move,move,current);}
+				if	(checkTopDiag(move,move))	{topDiag(move,move,current);}
+				if	(checkBotDiag(move,move))	{botDiag(move,move,current);}
+				if	(checkTopDiag(move,move))	{topDiag2(move,move,current);}
+				if	(checkBotDiag(move,move))	{botDiag2(move,move,current);}
 				if(current == first) {current=second;}
 				else {current = first;}
 				
@@ -89,6 +93,73 @@ public class Board {
 		
 	}
 	
+	//Checking functions
+	public boolean checkRight(int move, int next) {
+		next++;
+		System.out.println(next);
+		if	(board[next].getPiece()=='.') {return false;}
+		if	(board[move].getPiece()==board[next].getPiece()) {System.out.println("checkRight is true"); return true;}
+		if	(board[move].getPiece()!=board[next].getPiece()) {System.out.println("Recursion checkRight"); return checkRight(move,next);}
+		return false;
+	}
+	
+	public boolean checkLeft(int move, int next) {
+		next--;
+		if	(board[next].getPiece()=='.') {return false;}
+		if	(board[move].getPiece()==board[next].getPiece()) {System.out.println("checkRight is true"); return true;}
+		if	(board[move].getPiece()!=board[next].getPiece()) {System.out.println("Recursion checkRight"); return checkLeft(move,next);}
+		return false;
+	}
+	
+	public boolean checkTop(int move, int next) {
+		next-=8;
+		if	(board[next].getPiece()=='.') {return false;}
+		if	(board[move].getPiece()==board[next].getPiece()) {System.out.println("checkRight is true"); return true;}
+		if	(board[move].getPiece()!=board[next].getPiece()) {System.out.println("Recursion checkRight"); return checkTop(move,next);}
+		return false;
+	}
+	
+	public boolean checkBot(int move, int next) {
+		next+=8;
+		if	(board[next].getPiece()=='.') {return false;}
+		if	(board[move].getPiece()==board[next].getPiece()) {System.out.println("checkRight is true"); return true;}
+		if	(board[move].getPiece()!=board[next].getPiece()) {System.out.println("Recursion checkRight"); return checkBot(move,next);}
+		return false;
+	}
+	
+	public boolean checkTopDiag(int move, int next) {
+		next-=7;
+		if	(board[next].getPiece()=='.') {return false;}
+		if	(board[move].getPiece()==board[next].getPiece()) {System.out.println("checkRight is true"); return true;}
+		if	(board[move].getPiece()!=board[next].getPiece()) {System.out.println("Recursion checkRight"); return checkTopDiag(move,next);}
+		return false;
+	}
+	
+	public boolean checkBotDiag(int move, int next) {
+		next+=7;
+		if	(board[next].getPiece()=='.') {return false;}
+		if	(board[move].getPiece()==board[next].getPiece()) {System.out.println("checkRight is true"); return true;}
+		if	(board[move].getPiece()!=board[next].getPiece()) {System.out.println("Recursion checkRight"); return checkBotDiag(move,next);}
+		return false;
+	}
+	
+	public boolean checkTopDiag2(int move, int next) {
+		next-=9;
+		if	(board[next].getPiece()=='.') {return false;}
+		if	(board[move].getPiece()==board[next].getPiece()) {System.out.println("checkRight is true"); return true;}
+		if	(board[move].getPiece()!=board[next].getPiece()) {System.out.println("Recursion checkRight"); return checkTopDiag2(move,next);}
+		return false;
+	}
+	
+	public boolean checkBotDiag2(int move, int next) {
+		next+=9;
+		if	(board[next].getPiece()=='.') {return false;}
+		if	(board[move].getPiece()==board[next].getPiece()) {System.out.println("checkRight is true"); return true;}
+		if	(board[move].getPiece()!=board[next].getPiece()) {System.out.println("Recursion checkRight"); return checkBotDiag2(move,next);}
+		return false;
+	}
+	
+	//Flipping functions
 	public boolean rightFlip(int move, int next, Player current) {
 		//Checking the right of current Position
 		next++;
@@ -113,7 +184,6 @@ public class Board {
 			System.out.println("Flipped");
 			return leftFlip(move,next,current);
 			}
-		
 		return false;
 	}
 	public boolean topFlip(int move, int next, Player current) {
@@ -144,37 +214,63 @@ public class Board {
 		return false;
 	}
 	
-	public void checkFlip(int curr, Player current) {
+	public boolean topDiag(int move, int next, Player current) {
+		//Checking the top of current Position
+		next-=7;
+		if	(board[next].getPiece()=='.') {return false;}
+		if	(board[move].getPiece()==board[next].getPiece()) {return false;}
+		if	(board[move].getPiece()!=board[next].getPiece()) {
+			board[next].flip(current);
+			System.out.println("topDiag flipped");
+			return topDiag(move,next,current);
+			
+			}
 		
-		//Check the 8 positions around the current position
-		//Need to catch exception when array goes out of bound.
-//		
-//		//Check both diagonal directions
-//		if	((board[curr+7].getPiece() != '.' || board[curr-7].getPiece() != '.') &&
-//			 board[curr].getPiece() != board[curr+7].getPiece() &&
-//			 board[curr].getPiece() != board[curr-7].getPiece()
-//			) {
-//			if	(board[curr+7].getPiece() != '.' &&
-//					 board[curr].getPiece() != board[curr+7].getPiece()
-//			) {board[curr+7].flip(current);}
-//			if	(board[curr-7].getPiece() != '.' &&
-//				 board[curr].getPiece() != board[curr-7].getPiece()
-//			){board[curr-7].flip(current);}
-//			return true;
-//			}
-//		if	((board[curr+9].getPiece() != '.' || board[curr-9].getPiece() != '.') &&
-//				 board[curr].getPiece() != board[curr+9].getPiece() &&
-//				 board[curr].getPiece() != board[curr-9].getPiece()
-//				) {
-//				if	(board[curr+9].getPiece() != '.' &&
-//						 board[curr].getPiece() != board[curr+9].getPiece()
-//				) {board[curr+9].flip(current);}
-//				if	(board[curr-9].getPiece() != '.' &&
-//					 board[curr].getPiece() != board[curr-9].getPiece()
-//				){board[curr-9].flip(current);}
-//				return true;
-//				}
+		return false;
 	}
+	public boolean botDiag(int move, int next, Player current) {
+		//Checking the bottom of current Position
+		next+=7;
+		if	(board[next].getPiece()=='.') {return false;}
+		if	(board[move].getPiece()==board[next].getPiece()) {return false;}
+		if	(board[move].getPiece()!=board[next].getPiece()) {
+			board[next].flip(current);
+			System.out.println("botDiag flipped");
+			return botDiag(move,next,current);
+			}
+		return false;
+	}
+	
+	public boolean topDiag2(int move, int next, Player current) {
+		//Checking the top of current Position
+		next-=9;
+		if	(board[next].getPiece()=='.') {return false;}
+		if	(board[move].getPiece()==board[next].getPiece()) {return false;}
+		if	(board[move].getPiece()!=board[next].getPiece()) {
+			board[next].flip(current);
+			System.out.println("topDiag2 flipped");
+			return topDiag2(move,next,current);
+			
+			}
+		
+		return false;
+	}
+	public boolean botDiag2(int move, int next, Player current) {
+		//Checking the bottom of current Position
+		next+=9;
+		if	(board[next].getPiece()=='.') {return false;}
+		if	(board[move].getPiece()==board[next].getPiece()) {return false;}
+		if	(board[move].getPiece()!=board[next].getPiece()) {
+			board[next].flip(current);
+			System.out.println("botDiag2 flipped");
+			return botDiag2(move,next,current);
+			}
+		return false;
+	}
+		
+	//Need to catch exception when array goes out of bound.
+		
+	
 	
 
 	//Method to draw default 8x8 board
