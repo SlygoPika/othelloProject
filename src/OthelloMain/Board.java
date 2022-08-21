@@ -63,7 +63,7 @@ public class Board {
 			System.out.println("Please make a move for " + current.getName() + " (0-63)");
 			move = sc.nextInt();
 			if(move < 0 || move > 63) {
-				System.out.println("Please make a move");
+				// System.out.println("Please make a move");
 			} 
 			//If canPlay != true, ask user to make a valid move
 			else if (!(board[move].canPlay())){
