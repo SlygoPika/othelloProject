@@ -18,4 +18,4 @@ Players alternate taking turns. If a player does not have any valid moves, play 
 The player with the most discs on the board at the end of the game wins. If both players have the same number of discs, then the game is a draw.
 
 #### Credits
-The game rules was taken from https://www.eothello.com/ 
+The game rules were taken from https://www.eothello.com/ 
